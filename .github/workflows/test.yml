@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 5'
+  workflow_dispatch:
+
+jobs:
+  python:
+    timeout-minutes: 10
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run python tests
+        run: |
+          make pythontests
+
+  verilator:
+    timeout-minutes: 20
+    runs-on: ubuntu-22.04
+    container: verilator/verilator:latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run verilator tests
+        run: |
+          apt update
+          apt-get install -y python3-venv
+          make verilator
+
+  formal:
+    timeout-minutes: 10
+    runs-on: ubuntu-22.04
+    container: hdlc/yosys:latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run formal tests
+        run: |
+          apt update
+          apt-get install -y python3-venv
+          make formal
