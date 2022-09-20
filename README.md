@@ -4,7 +4,8 @@ Create fast and efficient standard cell based adders, multipliers and
 multiply-adders.
 
 [![CI status](https://github.com/antonblanchard/vlsi-arithmetic/actions/workflows/test.yml/badge.svg)](https://github.com/antonblanchard/vlsi-arithmetic/actions/workflows/test.yml)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![GitHub tag](https://img.shields.io/github/v/tag/antonblanchard/vlsi-arithmetic)](https://github.com/antonblanchard/vlsi-arithmetic/tags/)
+[![License](https://img.shields.io/github/license/antonblanchard/vlsi-arithmetic)](https://opensource.org/licenses/Apache-2.0)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 # Features
@@ -89,12 +90,12 @@ vlsi-multiplier is a python package, so this will install it and any
 dependencies:
 
 ```
-pip install git+https://github.com/antonblanchard/vlsi-arithmetic
+pip3 install git+https://github.com/antonblanchard/vlsi-arithmetic
 ```
 
 Another option is to install it from a checked out source tree:
 ```
-pip install .
+pip3 install .
 ```
 
 Amaranth requires Yosys. If you don't have a version installed, you can use the
@@ -127,6 +128,11 @@ another for the floating point multiplier):
 vlsi-multiplier --bits=64 --multiply-add --algorithm=hancarlson --tech=sky130hd --register-post-ppg --output=multiply_adder_pipelined.v
 ```
 
+The two multipliers on the Microwatt MPW7 tape out can be seen on the left side
+of the die:
+
+![Microwatt MPW7 Multipliers](media/microwatt-mpw7-multipliers.png)
+
 # Testing
 Local testing requires an installation of both yosys and verilator. Run
 `make check`.  Submitting a pull request will kick off the same set of tests.
@@ -147,6 +153,8 @@ Using ASAP7 as an example:
   Also note that ASAP7 inverts the outputs of the full and half adders, so you
   will see inverters in this file to undo this. Remove them if your technology
   has non inverting outputs.
+
+  eg Adding the xor definition:
 
 ```
       def _generate_xor(self, a, b, o):
