@@ -11,5 +11,5 @@ Assuming you have setup OpenROAD-flow-scripts, do the following:
 ```
 cd OpenROAD-flow-scripts/flow
 
-make DESIGN_CONFIG=/path/to/vlsi-arithmetic/openroad/64bit_2cycle_asap7_multiply_adder/config.mk
+make DESIGN_CONFIG=/path/to/vlsiffra/openroad/64bit_2cycle_asap7_multiply_adder/config.mk
 ```

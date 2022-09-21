@@ -2,9 +2,9 @@ import unittest
 import random
 from amaranth.sim import Simulator
 
-from vlsi_arithmetic.adder import BrentKung
-from vlsi_arithmetic.multiplier import Multiplier, BoothRadix4, Dadda
-from vlsi_arithmetic.tech.none import NoneProcess
+from vlsiffra.adder import BrentKung
+from vlsiffra.multiplier import Multiplier, BoothRadix4, Dadda
+from vlsiffra.tech.none import NoneProcess
 
 
 class TestAdder(BrentKung, NoneProcess):

@@ -1,11 +1,11 @@
-# vlsi-arithmetic
+![vlsiffra logo](/media/vlsiffra.png)
 
 Create fast and efficient standard cell based adders, multipliers and
 multiply-adders.
 
-[![CI status](https://github.com/antonblanchard/vlsi-arithmetic/actions/workflows/test.yml/badge.svg)](https://github.com/antonblanchard/vlsi-arithmetic/actions/workflows/test.yml)
-[![GitHub tag](https://img.shields.io/github/v/tag/antonblanchard/vlsi-arithmetic)](https://github.com/antonblanchard/vlsi-arithmetic/tags/)
-[![License](https://img.shields.io/github/license/antonblanchard/vlsi-arithmetic)](https://opensource.org/licenses/Apache-2.0)
+[![CI status](https://github.com/antonblanchard/vlsiffra/actions/workflows/test.yml/badge.svg)](https://github.com/antonblanchard/vlsiffra/actions/workflows/test.yml)
+[![GitHub tag](https://img.shields.io/github/v/tag/antonblanchard/vlsiffra)](https://github.com/antonblanchard/vlsiffra/tags/)
+[![License](https://img.shields.io/github/license/antonblanchard/vlsiffra)](https://opensource.org/licenses/Apache-2.0)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 # Features
@@ -24,7 +24,7 @@ improves (including better timing aware global placement and global routing,
 improvements to the resizer, improvements to clock tree synthesis and the use of
 LVT cells).
 
-vlsi-arithmetic achieves this by using many well established techniques
+vlsiffra achieves this by using many well established techniques
 including
 [Booth encoding](https://en.wikipedia.org/wiki/Booth%27s_multiplication_algorithm),
 [Dadda reduction](https://en.wikipedia.org/wiki/Dadda_multiplier) and a choice
@@ -38,7 +38,7 @@ which details the implementation of the multiplier in the
 
 ## Configurable
 
-vlsi-arithmetic is written in the
+vlsiffra is written in the
 [Amaranth](https://github.com/amaranth-lang/amaranth) HDL language which allows
 it to be very configurable, including:
 
@@ -73,24 +73,24 @@ used to further verify the design.
 
 ## Support for many technologies.
 
-vlsi-arithmetic currently supports the
+vlsiffra currently supports the
 [SkyWater sky130hd](https://github.com/google/skywater-pdk),
 [GlobalFoundries GF180MCU](https://github.com/google/gf180mcu-pdk) and
 [ASAP7](https://github.com/The-OpenROAD-Project/asap7) PDKs and standard cell
 libraries.
 
 ## Easy to add support for new technologies
-vlsi-arithmetic only requires a few standard cells (full and half adders,
+vlsiffra only requires a few standard cells (full and half adders,
 2 input xor, 2 input and, inverter as well as a couple of more complicated
 cells (ao21, ao22, ao33)
 
 # Installation
 
-vlsi-multiplier is a python package, so this will install it and any
+vlsiffra is a python package, so this will install it and any
 dependencies:
 
 ```
-pip3 install git+https://github.com/antonblanchard/vlsi-arithmetic
+pip3 install git+https://github.com/antonblanchard/vlsiffra
 ```
 
 Another option is to install it from a checked out source tree:
@@ -141,7 +141,7 @@ Local testing requires an installation of both yosys and verilator. Run
 
 Using ASAP7 as an example:
 
-- A [technology file](vlsi_arithmetic/tech/asap7.py) that contains code to
+- A [technology file](vlsiffra/tech/asap7.py) that contains code to
   instantiate the standard cells required. Use one of the existing ones as a
   starting point.
 
@@ -168,7 +168,7 @@ Using ASAP7 as an example:
         self.m.submodules += xorgate
 ```
 
-- Modify [get_tech()](vlsi_arithmetic/tech/Tech.py) to hook the new tech up.
+- Modify [get_tech()](vlsiffra/tech/Tech.py) to hook the new tech up.
 
 - [Verilog behavioural models](verilog/asap7.v) for the standard cells, used
   for verification.
@@ -202,7 +202,12 @@ Using ASAP7 as an example:
 - Support for 4:2 compressors (basically 2 full adders). This is what
   Bluegene Q uses and might help to improve area and frequency a bit. We'd
   need to create a 4:2 compressor cell since none of the standard cell
-  libraries vlsi-arithmetic support contain one.
+
+# Why vlsiffra?
+My last attempt to name an Open Source project resulted in the impossible to
+Google for "Microwatt" OpenPOWER VHDL core. vlsiffra is a portmanteau of
+VLSI and siffra, the Swedish word for number. Thanks to @ruscur for the
+idea. Hello to all our Swedish readers.
 
 [^1]: ASAP7 RVT cells, STA at best corner, 50 ps reserved in the first and
 second cycles for input and output logic/routing outside the macro.
