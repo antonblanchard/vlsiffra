@@ -16,6 +16,14 @@ for PROCESS in ${PROCESSES}; do
 	done
 done
 
+for PROCESS in ${PROCESSES}; do
+	for ADDER in ${ADDERS}; do
+		VERILOG=generated/carry_adder_${PROCESS}_${ADDER}.v
+		vlsi-adder --bits=64 --carry-in --carry-out --algorithm=${ADDER} --tech=${PROCESS} --output=${VERILOG}
+		BITS=64 VERILOG=${VERILOG} PROCESS_VERILOG=verilog/${PROCESS}.v yosys -c formal/carry_adder.tcl
+	done
+done
+
 # Test multipliers
 for PROCESS in ${PROCESSES}; do
 	for ADDER in ${ADDERS}; do

@@ -4,10 +4,23 @@ from amaranth import Elaboratable, Module, Signal, Const
 
 
 class AdderFramework(Elaboratable):
-    def __init__(self, bits=64, register_input=False, register_output=False, powered=False):
+    def __init__(self, bits=64, register_input=False, register_output=False,
+                 carry_in=False, carry_out=False, powered=False):
         self.a = Signal(bits)
         self.b = Signal(bits)
         self.o = Signal(bits)
+
+        if carry_in:
+            self._carry_in = True
+            self.carry_in = Signal()
+        else:
+            self._carry_in = False
+
+        if carry_out:
+            self._carry_out = True
+            self.carry_out = Signal()
+        else:
+            self._carry_out = False
 
         if powered:
             self._powered = True
@@ -41,7 +54,12 @@ class AdderFramework(Elaboratable):
         self._p = [Signal() for i in range(self._bits)]
         self._g = [Signal() for i in range(self._bits)]
 
-        for i in range(self._bits):
+        if self._carry_in:
+            self._generate_full_adder(a[0], b[0], self.carry_in, self._p[0], self._g[0])
+        else:
+            self._generate_half_adder(a[0], b[0], self._p[0], self._g[0])
+
+        for i in range(1, self._bits):
             self._generate_half_adder(a[i], b[i], self._p[i], self._g[i])
 
         # We need a copy of p
@@ -61,6 +79,15 @@ class AdderFramework(Elaboratable):
         for i in range(self._bits):
             # This also flattens the list of bits when writing to o
             self._generate_xor(p_tmp[i], self._g[i], o[i])
+
+        if self._carry_out:
+            carry_out = Signal()
+            m.d.comb += carry_out.eq(self._g[self._bits])
+
+            if self._register_output:
+                m.d.sync += self.carry_out.eq(carry_out)
+            else:
+                m.d.comb += self.carry_out.eq(carry_out)
 
         o2 = Signal(self._bits, reset_less=True)
         if self._register_output:

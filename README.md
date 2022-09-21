@@ -180,8 +180,6 @@ Using ASAP7 as an example:
 
 - No support for signed multipliers. Planning to add this.
 
-- No support for carry in or carry out of adders. Planning to add this.
-
 - No support for clock gating yet.
 
 - Formal verification of multipliers is slow, and gets unbearably slow as

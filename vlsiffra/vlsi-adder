@@ -27,6 +27,12 @@ if __name__ == "__main__":
     parser.add_argument('--algorithm',
                         help='Adder algorithm (brentkung (default), koggestone, hancarlson, inferred)')
 
+    parser.add_argument('--carry-in', action='store_true',
+                        help='Carry in signal')
+
+    parser.add_argument('--carry-out', action='store_true',
+                        help='Carry out signal')
+
     parser.add_argument('--powered', action='store_true',
                         help='Add power pins (eg VPWR/VGND)')
 
@@ -60,10 +66,17 @@ if __name__ == "__main__":
         pass
 
     adder = myadder(bits=args.bits, register_input=args.register_input,
+                    carry_in=args.carry_in, carry_out=args.carry_out,
                     register_output=args.register_output, powered=args.powered)
 
     ports = [adder.a, adder.b, adder.o]
     if args.powered:
         ports.extend([adder.VPWR, adder.VGND])
+
+    if args.carry_in:
+        ports.append(adder.carry_in)
+
+    if args.carry_out:
+        ports.append(adder.carry_out)
 
     args.output.write(verilog.convert(adder, ports=ports, name='adder', strip_internal_attrs=True))
