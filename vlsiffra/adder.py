@@ -1,6 +1,6 @@
 import math
 
-from amaranth import Elaboratable, Module, Signal, Const
+from amaranth import Elaboratable, Module, Signal, Cat
 
 
 class AdderFramework(Elaboratable):
@@ -68,21 +68,18 @@ class AdderFramework(Elaboratable):
             m.d.comb += p_tmp[i].eq(self._p[i])
 
         self._calculate_pg()
+        o = [Signal() for i in range(self._bits)]
 
         # g is the carry out signal. We need to shift it left one bit then
-        # xor it with the sum (ie p_tmp). Since we have a list of 1 bit
-        # signals, just insert a constant zero signal at the head of of the
-        # list to shift g.
-        self._g.insert(0, Const(0))
+        # xor it with the sum (ie p_tmp). This means bit 0 is just p.
+        m.d.comb += o[0].eq(p_tmp[0])
 
-        o = Signal(self._bits)
-        for i in range(self._bits):
-            # This also flattens the list of bits when writing to o
-            self._generate_xor(p_tmp[i], self._g[i], o[i])
+        for i in range(1, self._bits):
+            self._generate_xor(p_tmp[i], self._g[i - 1], o[i])
 
         if self._carry_out:
             carry_out = Signal()
-            m.d.comb += carry_out.eq(self._g[self._bits])
+            m.d.comb += carry_out.eq(self._g[self._bits - 1])
 
             if self._register_output:
                 m.d.sync += self.carry_out.eq(carry_out)
@@ -90,10 +87,11 @@ class AdderFramework(Elaboratable):
                 m.d.comb += self.carry_out.eq(carry_out)
 
         o2 = Signal(self._bits, reset_less=True)
+        # This also flattens the list of bits when writing to o2
         if self._register_output:
-            m.d.sync += o2.eq(o)
+            m.d.sync += o2.eq(Cat(o[n] for n in range(len(o))))
         else:
-            m.d.comb += o2.eq(o)
+            m.d.comb += o2.eq(Cat(o[n] for n in range(len(o))))
 
         m.d.comb += self.o.eq(o2)
         return m
