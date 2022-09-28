@@ -2,7 +2,7 @@
 
 VERILATOR_OPTS="-O3 -Wno-fatal -Wno-TIMESCALEMOD"
 PROCESSES="sky130hd asap7 gf180mcu"
-ADDERS="brentkung koggestone hancarlson"
+ADDERS="brentkung koggestone hancarlson ripple"
 
 mkdir -p generated
 
