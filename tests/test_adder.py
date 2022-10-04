@@ -2,8 +2,8 @@ import unittest
 import random
 from amaranth.sim import Simulator, Settle
 
-from vlsi_arithmetic.tech.none import NoneProcess
-from vlsi_arithmetic.adder import BrentKung, KoggeStone, HanCarlson
+from vlsiffra.tech.none import NoneProcess
+from vlsiffra.adder import BrentKung, KoggeStone, HanCarlson
 
 
 class TestBrentKungAdder(BrentKung, NoneProcess):

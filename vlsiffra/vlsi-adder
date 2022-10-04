@@ -5,8 +5,8 @@ import argparse
 
 from amaranth.back import verilog
 
-from vlsi_arithmetic.adder import BrentKung, KoggeStone, HanCarlson, Inferred
-from vlsi_arithmetic.tech.Tech import Tech
+from vlsiffra.adder import BrentKung, KoggeStone, HanCarlson, Inferred
+from vlsiffra.tech.Tech import Tech
 
 
 if __name__ == "__main__":

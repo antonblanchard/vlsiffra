@@ -6,9 +6,9 @@ import argparse
 
 from amaranth.back import verilog
 
-from vlsi_arithmetic.adder import BrentKung, KoggeStone, HanCarlson, Inferred
-from vlsi_arithmetic.multiplier import Multiplier, BoothRadix4, LongMultiplication, Dadda
-from vlsi_arithmetic.tech.Tech import Tech
+from vlsiffra.adder import BrentKung, KoggeStone, HanCarlson, Inferred
+from vlsiffra.multiplier import Multiplier, BoothRadix4, LongMultiplication, Dadda
+from vlsiffra.tech.Tech import Tech
 
 
 if __name__ == "__main__":
