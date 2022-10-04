@@ -74,7 +74,7 @@ class Multiplier(Elaboratable):
             for j in range(len(self._partial_products[i])):
                 s = Signal(name="pp_row%d_%d" % (i, j), reset_less=True)
                 self._partial_products_registered[i].append(s)
-                if self._register_post_ppg:
+                if self._register_post_ppg and (type(self._partial_products[i][j]) is not Const):
                     self.m.d.sync += s.eq(self._partial_products[i][j])
                 else:
                     self.m.d.comb += s.eq(self._partial_products[i][j])
