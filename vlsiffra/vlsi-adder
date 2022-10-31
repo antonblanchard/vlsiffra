@@ -5,7 +5,7 @@ import argparse
 
 from amaranth.back import verilog
 
-from vlsiffra.adder import BrentKung, KoggeStone, HanCarlson, Inferred
+from vlsiffra.adder import BrentKung, KoggeStone, HanCarlson, Inferred, Ripple
 from vlsiffra.tech.Tech import Tech
 
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
                         help='What technology to build for, (none (default), sky130hd, asap7, gf180mcu)')
 
     parser.add_argument('--algorithm',
-                        help='Adder algorithm (brentkung (default), koggestone, hancarlson, inferred)')
+                        help='Adder algorithm (brentkung (default), koggestone, hancarlson, inferred, ripple)')
 
     parser.add_argument('--powered', action='store_true',
                         help='Add power pins (eg VPWR/VGND)')
@@ -52,6 +52,8 @@ if __name__ == "__main__":
             algorithm = HanCarlson
         elif args.algorithm.lower() == 'inferred':
             algorithm = Inferred
+        elif args.algorithm.lower() == 'ripple':
+            algorithm = Ripple
         else:
             print("Unknown algorithm")
             exit(1)

@@ -5,7 +5,7 @@ mkdir -p generated
 source venv/bin/activate
 
 PROCESSES="sky130hd asap7 gf180mcu"
-ADDERS="brentkung koggestone hancarlson"
+ADDERS="brentkung koggestone hancarlson ripple"
 
 # Test adders
 for PROCESS in ${PROCESSES}; do

@@ -174,3 +174,84 @@ class Inferred(Elaboratable):
 
         m.d.comb += self.o.eq(o2)
         return m
+
+
+class Ripple(Elaboratable):
+    def __init__(self, bits=64, register_input=False, register_output=False,
+                 carry_in=False, carry_out=False, powered=False):
+        self.a = Signal(bits)
+        self.b = Signal(bits)
+        self.o = Signal(bits)
+
+        if carry_in:
+            self._carry_in = True
+            self.carry_in = Signal()
+        else:
+            self._carry_in = False
+
+        if carry_out:
+            self._carry_out = True
+            self.carry_out = Signal()
+        else:
+            self._carry_out = False
+
+        if powered:
+            self._powered = True
+            self.VPWR = Signal()
+            self.VGND = Signal()
+        else:
+            self._powered = False
+
+        self._bits = bits
+        self._register_input = register_input
+        self._register_output = register_output
+
+    def elaborate(self, platform):
+        self.m = m = Module()
+
+        a = Signal(self._bits, reset_less=True)
+        b = Signal(self._bits, reset_less=True)
+        o = Signal(self._bits, reset_less=True)
+        ci = Signal(self._bits, reset_less=True)
+        co = Signal(self._bits, reset_less=True)
+
+        if self._register_input:
+            m.d.sync += [
+                a.eq(self.a),
+                b.eq(self.b),
+            ]
+            if self._carry_in:
+                m.d.sync += ci[0].eq(self.carry_in)
+
+        else:
+            m.d.comb += [
+                a.eq(self.a),
+                b.eq(self.b),
+            ]
+            if self._carry_in:
+                m.d.comb += ci[0].eq(self.carry_in)
+
+        for i in range(0, self._bits):
+            if i == 0 and not self._carry_in:
+                self._generate_half_adder(a[i], b[i], o[i], co[i])
+            else:
+                self._generate_full_adder(a[i], b[i], ci[i], o[i], co[i])
+
+            # carry chain
+            if i != 0:
+                m.d.comb += ci[i].eq(co[i - 1])
+
+        if self._carry_out:
+            if self._register_output:
+                m.d.sync += self.carry_out.eq(co[self._bits - 1])
+            else:
+                m.d.comb += self.carry_out.eq(co[self._bits - 1])
+
+        o2 = Signal(self._bits, reset_less=True)
+        if self._register_output:
+            m.d.sync += o2.eq(o)
+        else:
+            m.d.comb += o2.eq(o)
+
+        m.d.comb += self.o.eq(o2)
+        return m

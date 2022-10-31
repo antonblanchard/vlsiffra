@@ -58,6 +58,8 @@ it to be very configurable, including:
   - [Kogge-Stone](https://en.wikipedia.org/wiki/Kogge%E2%80%93Stone_adder)
     (more area, higher performance)
   - Han-Carlson (a balance of area and performance)
+  - [Ripple](https://en.wikipedia.org/wiki/Adder_(electronics)#Ripple-carry_adder)
+    (lowest area, lowest performance)
 
 - Configurable number of stages
 
