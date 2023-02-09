@@ -172,7 +172,7 @@ class BoothRadix4(Elaboratable):
         # Add a zero in the LSB of the multiplier and multiplicand
         self.m.d.comb += [
             multiplier.eq(Cat(Const(0), self.a_registered, Const(0), Const(0))),
-            multiplicand.eq(Cat(Const(0), self.b_registered)),
+            multiplicand.eq(Cat(Const(0), Const(0), self.b_registered)),
         ]
 
         last_b = self._bits
