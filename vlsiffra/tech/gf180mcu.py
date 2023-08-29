@@ -69,9 +69,9 @@ class GF180MCUProcess(Elaboratable):
 
     # Used in adder
     def _generate_ao21(self, a1, a2, b1, o):
+        """ 2-input AND into first input of 2-input OR. """
         zn = Signal()
 
-        # 2-input AND into first input of 2-input OR
         ao21gate = self._PoweredInstance(
             "gf180mcu_fd_sc_mcu7t5v0__aoi21_1",
             i_A1=a1,
@@ -90,9 +90,9 @@ class GF180MCUProcess(Elaboratable):
 
     # Used in multiplier
     def _generate_ao22(self, a1, a2, b1, b2, o):
+        """ 2-input AND into both inputs of 2-input OR. """
         zn = Signal()
 
-        # 2-input AND into both inputs of 2-input OR
         ao22gate = self._PoweredInstance(
             "gf180mcu_fd_sc_mcu7t5v0__aoi22_1",
             i_A1=a1,
@@ -112,7 +112,7 @@ class GF180MCUProcess(Elaboratable):
 
     # Used in multiplier
     def _generate_oai33(self, a1, a2, a3, b1, b2, b3, o):
-        # 2 3-input OR into 2-input NAND
+        """ 2 3-input OR into 2-input NAND. """
         oai33gate = self._PoweredInstance(
             "gf180mcu_fd_sc_mcu7t5v0__oai33_1",
             i_A1=a1,
