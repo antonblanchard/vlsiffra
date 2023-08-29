@@ -1,4 +1,6 @@
-from amaranth import Elaboratable, Instance
+from amaranth import Instance
+from .base import Process
+
 
 """
 Skywater's 130nm process technology with Google open source PDK found at
@@ -13,7 +15,7 @@ with different trade offs. The `Standard Cells Library Index Spreadsheet
 """
 
 
-class SKY130Process(Elaboratable):
+class SKY130Process(Process):
     LIBRARY = None
 
     def _PoweredInstance(self, *args, **kwargs):

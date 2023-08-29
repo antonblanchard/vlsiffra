@@ -1,7 +1,8 @@
-from amaranth import Elaboratable, Instance, Signal
+from amaranth import Instance, Signal
+from .base import Process
 
 
-class GF180MCUProcess(Elaboratable):
+class GF180MCUProcess(Process):
     def _PoweredInstance(self, *args, **kwargs):
         if self._powered:
             kwargs.update({
