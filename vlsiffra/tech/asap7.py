@@ -103,7 +103,7 @@ class ASAP7Process(Elaboratable):
 
     # Used in adder
     def _generate_ao21(self, a1, a2, b1, o):
-        # 2-input AND into first input of 2-input OR
+        """ 2-input AND into first input of 2-input OR. """
         a21o = self._PoweredInstance(
             "AO21x1_ASAP7_75t_R",
             o_Y=o,
@@ -116,7 +116,7 @@ class ASAP7Process(Elaboratable):
 
     # Used in multiplier
     def _generate_ao22(self, a1, a2, b1, b2, o):
-        # 2-input AND into both inputs of 2-input OR
+        """ 2-input AND into both inputs of 2-input OR. """
         a22ogate = self._PoweredInstance(
             "AO22x1_ASAP7_75t_R",
             i_A1=a1,
@@ -130,7 +130,7 @@ class ASAP7Process(Elaboratable):
 
     # Used in multiplier
     def _generate_ao33(self, a1, a2, a3, b1, b2, b3, o):
-        # 3-input AND into both inputs of 2-input OR
+        """ 3-input AND into both inputs of 2-input OR. """
         ao33gate = self._PoweredInstance(
             "AO33x2_ASAP7_75t_R",
             i_A1=a1,
