@@ -10,8 +10,13 @@ on:
 jobs:
   python:
     timeout-minutes: 10
-    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        os:
+          - ubuntu-22.04
+          - ubuntu-latest
 
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
 
